@@ -58,7 +58,7 @@ def train_regression(x,y,lr=0.01,epochs=100) -> tuple:
     ssr = np.mean(residuals**2)
     s2=ssr/(n-2)
     
-    std_err = np.spqrt(s2/ss_xx)
+    std_err = np.sqrt(s2/ss_xx)
     
     #p-value calculation using scipy
     #NOTE: p-value is gives if the there is an actual relation between the two variables x and y
