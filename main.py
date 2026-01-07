@@ -76,15 +76,26 @@ if c=="1":
     x_name="study_hours"
     y_name='grade'
 else:
-    data = pd.read_csv('dataset.csv',usecols=[9,16],names=["Score","Hours"],skiprows=0)
+    data = pd.read_csv('dataset.csv',usecols=[9,16],names=["Score","Hours"],skiprows=1)
     print(data)
     x=data["Hours"].astype('float64')
     y=data['Score'].astype('float64')
     x_name='Hours'
     y_name='Score'
     
-slope, intercept, correlation, p_value, std_err,losses_list,weights_list,biases_list = train_regression(x, y)
 
+mse_best=100000000000
+best_lr=0
+for lr in [0.1, 0.01, 0.001, 0.0001]:
+    slope, intercept, correlation, p_value, std_err,losses_list,weights_list,biases_list = train_regression(x, y, lr=lr, epochs=200)
+    y_pred= slope * x + intercept 
+    mse = np.mean((y - y_pred) ** 2) 
+    if mse<mse_best:
+        mse_best = mse
+        best_lr= lr
+    print(lr, losses_list[-1])
+print("Best lr=",best_lr)
+slope, intercept, correlation, p_value, std_err,losses_list,weights_list,biases_list = train_regression(x, y,lr)
 
 x_line = np.linspace(min(x), max(x), 100)
 y_line = slope * x_line + intercept
@@ -116,5 +127,10 @@ rmse=np.sqrt(mse)
 print("MSE=",mse)
 print("RMSE=",rmse)
 print("Correlation=",correlation)
+alpha = 0.05
+if p_value <= alpha:
+    print("\033[34mSlope is statistically significant")
+else:
+    print("\033[31mNo statistically significant linear relationship\033[0m")
 print("p-value=",p_value)
 plt.show()
