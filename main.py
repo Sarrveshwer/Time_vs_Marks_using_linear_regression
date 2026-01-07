@@ -71,6 +71,7 @@ def train_regression(x,y,lr=0.01,epochs=100) -> tuple:
 c=input("Choose dataset 1 (success) or 2 (failure due to data):")
 if c=="1":
     data = pd.read_csv('dataset_study.csv',usecols=[1,2])
+    print(data)
     x=data["study_hours"]
     y=data['grade']
     x_name="study_hours"
@@ -82,20 +83,29 @@ else:
     y=data['Score'].astype('float64')
     x_name='Hours'
     y_name='Score'
-    
 
+#normalize data to try to imrpove performance and p-value    
+x_mean = x.mean()
+x_std = x.std()
+x_norm = (x - x_mean) / x_std
+
+y_mean = y.mean()
+y_std = y.std()
+y_norm = (y - y_mean) / y_std
 mse_best=100000000000
 best_lr=0
 for lr in [0.1, 0.01, 0.001, 0.0001]:
-    slope, intercept, correlation, p_value, std_err,losses_list,weights_list,biases_list = train_regression(x, y, lr=lr, epochs=200)
+    slope, intercept, correlation, p_value, std_err,losses_list,weights_list,biases_list = train_regression(x_norm, y_norm, lr=lr)
     y_pred= slope * x + intercept 
     mse = np.mean((y - y_pred) ** 2) 
     if mse<mse_best:
         mse_best = mse
         best_lr= lr
-    print(lr, losses_list[-1])
-print("Best lr=",best_lr)
-slope, intercept, correlation, p_value, std_err,losses_list,weights_list,biases_list = train_regression(x, y,lr)
+print("\033[92mBest lr=",best_lr)
+slope, intercept, correlation, p_value, std_err,losses_list,weights_list,biases_list = train_regression(x_norm, y_norm,best_lr)
+
+slope = slope * (y_std / x_std)
+intercept = y_mean + y_std * intercept - slope * x_mean
 
 x_line = np.linspace(min(x), max(x), 100)
 y_line = slope * x_line + intercept
@@ -121,16 +131,21 @@ sns.scatterplot(data=data,x=x_name,y=y_name,color="red")
 plt.title("Linear Regression")
 plt.plot(x_line,y_line,color="blue",label='slope')
 
-y_pred= slope * x + intercept 
+y_pred= slope * x+ intercept 
 mse = np.mean((y - y_pred) ** 2) 
 rmse=np.sqrt(mse) 
-print("MSE=",mse)
-print("RMSE=",rmse)
-print("Correlation=",correlation)
-alpha = 0.05
-if p_value <= alpha:
-    print("\033[34mSlope is statistically significant")
+print("\033[34mMSE=",mse)
+print("\033[34mRMSE=",rmse)
+if correlation < 0.70:
+    print("\033[91mCorrelation=",correlation)
 else:
-    print("\033[31mNo statistically significant linear relationship\033[0m")
-print("p-value=",p_value)
+    print("\033[92mCorrelation=",correlation)
+
+alpha = 0.07
+if p_value <= alpha:
+    print("\033[92mSlope is statistically significant\033[0m")
+else:
+    print("\033[91mNo statistically significant linear relationship\033[0m")
+print("\033[34p-value=",p_value)
+print('\033[0m')
 plt.show()
