@@ -1,6 +1,6 @@
 # Time_vs_Marks_using_linear_regression
  
-#OUTPUT 1
+# OUTPUT 1
 Choose dataset 1 (success) or 2 (failure due to data):1
       study_hours  grade
 0            9.15  91.91
@@ -23,7 +23,7 @@ Correlation= 0.8262974416640296
 Slope is statistically significant
 p-value= 0.0
 
-#OUTPUT 2
+# OUTPUT 2
 Choose dataset 1 (success) or 2 (failure due to data):2
       Score  Hours
 0     59.61   10.3
