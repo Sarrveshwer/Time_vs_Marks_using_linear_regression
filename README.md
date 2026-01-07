@@ -35,7 +35,7 @@ Slope is statistically significant
 p-value = 0.0
 ```
 
-![Figure 1 — Synthetic data example (output 1)](images/output 1.png)
+![Figure 1 — Synthetic data example (output 1)](images/output1.png)
 
 Dataset used for OUTPUT 1 (synthetic example):
 - https://www.kaggle.com/datasets/andreylss/study-hours-vs-grades-dataset?resource=download
