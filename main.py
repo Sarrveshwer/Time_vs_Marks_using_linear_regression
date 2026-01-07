@@ -34,8 +34,8 @@ def train_regression(x,y,lr=0.01,epochs=100) -> tuple:
         dw = -2/n * np.sum(x*error)
         db = -2/n * np.sum(error)
         
-        w=lr*dw
-        b=lr*db
+        w-=lr*dw
+        b-=lr*db
     #Slope = weight
     slope=w
     #Intercept = bias
@@ -53,9 +53,9 @@ def train_regression(x,y,lr=0.01,epochs=100) -> tuple:
     #Standard error not you normal one but slighlty changed for line of linear regression
     #formula is sqrt(s^2/mse)
     #s^2 = ssr/n-2
-    #ssr (SUM OF SQUARED RESIDUALS) = mean((y-y_pred)**2)
+    #ssr (SUM OF SQUARED RESIDUALS) = sum((y-y_pred)**2)
     residuals = y-y_pred
-    ssr = np.mean(residuals**2)
+    ssr = np.sum(residuals**2)
     s2=ssr/(n-2)
     
     std_err = np.sqrt(s2/ss_xx)
@@ -73,11 +73,15 @@ if c=="1":
     data = pd.read_csv('dataset_study.csv',usecols=[1,2])
     x=data["study_hours"]
     y=data['grade']
+    x_name="study_hours"
+    y_name='grade'
 else:
     data = pd.read_csv('dataset.csv',usecols=[9,16],names=["Score","Hours"],skiprows=0)
     print(data)
     x=data["Hours"].astype('float64')
     y=data['Score'].astype('float64')
+    x_name='Hours'
+    y_name='Score'
     
 slope, intercept, correlation, p_value, std_err,losses_list,weights_list,biases_list = train_regression(x, y)
 
@@ -85,7 +89,25 @@ slope, intercept, correlation, p_value, std_err,losses_list,weights_list,biases_
 x_line = np.linspace(min(x), max(x), 100)
 y_line = slope * x_line + intercept
 
-sns.scatterplot(data=data,x="study_hours",y="grade",color="red")
+plt.figure()
+plt.plot(losses_list)
+plt.xlabel("Iteration")
+plt.ylabel("MSE loss")
+plt.title("Gradient descent: loss over iterations")
+plt.show()
+
+# 2) Weight and bias vs iteration
+plt.figure()
+plt.plot(weights_list, label="w (slope)")
+plt.plot(biases_list, label="b (intercept)")
+plt.xlabel("Iteration")
+plt.ylabel("Parameter value")
+plt.title("Gradient descent: parameters over iterations")
+plt.legend()
+plt.show()
+
+sns.scatterplot(data=data,x=x_name,y=y_name,color="red")
+plt.title("Linear Regression")
 plt.plot(x_line,y_line,color="blue",label='slope')
 
 y_pred= slope * x + intercept 
