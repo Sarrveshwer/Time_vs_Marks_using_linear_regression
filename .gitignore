@@ -1,3 +1,5 @@
 /.venv/
 /.vscode/
 /.idea/
+/dataset.csv
+/dataset_study.csv
