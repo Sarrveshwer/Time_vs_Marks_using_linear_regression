@@ -3,11 +3,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.stats import t
+from scipy.interpolate import interpn
 import logging
 import time
 import sys
 import datetime
 import os
+import traceback
 
 
 real_input = input
@@ -112,6 +114,14 @@ class LinearRegressionModel:
         self.losses = []
         self.ws = []
         self.bs = []
+        self.slope = 0.0
+        self.intercept = 0.0
+        self.y_pred = None
+        self.correlation = 0.0
+        self.p_value = 0.0
+        self.std_err = 0.0
+        self.mse = 0.0
+        self.r_squared = 0.0
 
     def load_data(self, choice):
         if choice == "1":
@@ -208,64 +218,119 @@ class LinearRegressionModel:
                 best_lr = lr
                 
         print("Best lr=", best_lr)
-        slope, intercept, correlation, p_value, std_err, losses_list, weights_list, biases_list = \
+        self.slope, self.intercept, self.correlation, self.p_value, self.std_err, self.losses, self.ws, self.bs = \
             self.train_step(x_norm, y_norm, best_lr, training_epochs)
 
-        slope = slope * (y_std / x_std)
-        intercept = y_mean + y_std * intercept - slope * x_mean
+        self.slope = self.slope * (y_std / x_std)
+        self.intercept = y_mean + y_std * self.intercept - self.slope * x_mean
 
-        y_pred = slope * self.x + intercept 
-        mse = np.mean((self.y - y_pred) ** 2) 
-        rmse = np.sqrt(mse) 
-        print("MSE=", mse)
+        self.y_pred = self.slope * self.x + self.intercept 
+        self.mse = np.mean((self.y - self.y_pred) ** 2) 
+        rmse = np.sqrt(self.mse) 
+        
+        # Calculate R-squared
+        ss_res = np.sum((self.y - self.y_pred) ** 2)
+        ss_tot = np.sum((self.y - self.y.mean()) ** 2)
+        self.r_squared = 1 - (ss_res / ss_tot)
+
+        print("MSE=", self.mse)
         print("RMSE=", rmse)
-        if correlation < 0.70:
-            print("Correlation=", correlation)
-        else:
-            print("Correlation=", correlation)
+        print("Correlation (R)=", self.correlation)
+        print("R-squared=", self.r_squared)
 
         alpha = 0.07
-        if p_value <= alpha:
+        if self.p_value <= alpha:
             print("Slope is statistically significant")
         else:
             print("No statistically significant linear relationship")
-        print("p-value=", p_value)
+        print("p-value=", self.p_value)
 
-        x_line = np.linspace(min(self.x), max(self.x), 100)
-        y_line = slope * x_line + intercept
+        self.plot()
 
-        layout = [
-            ["loss", "params"],
-            ["scatter", "scatter"]
-        ]
-
+    def plot(self):
+        # Update global font sizes for better scaling
+        plt.rcParams.update({'font.size': 12, 'axes.titlesize': 16, 'axes.labelsize': 14})
+        sns.set_theme(style="darkgrid")
         safe_timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        
+        layout = [
+            ["regression", "loss"],
+            ["params", "residuals"]
+        ]
+        
+        fig, axes = plt.subplot_mosaic(layout, figsize=(16, 14), constrained_layout=True)
 
-        fig, axes = plt.subplot_mosaic(layout, figsize=(10, 8))
+        # 1) Regression Plot with Distance-Based Coloring (Closer = Darker)
+        x_plot = self.x
+        y_plot = self.y
+        residuals = self.y - self.y_pred
+        abs_residuals = np.abs(residuals)
+        
+        # Sort values so darker (closer) points are plotted on top
+        # Smallest abs_residuals should be last in the sorted list
+        idx = abs_residuals.argsort()[::-1] 
+        x_sorted, y_sorted, res_sorted = x_plot.iloc[idx], y_plot.iloc[idx], abs_residuals.iloc[idx]
+        
+        # Using "Greens_r" map: low residual (near line) = dark, high residual (far) = light
+        scatter = axes["regression"].scatter(x_sorted, y_sorted, c=res_sorted, cmap="Greens_r", s=40, alpha=0.9, edgecolor='none')
+        
+        x_line = np.linspace(min(self.x), max(self.x), 100)
+        y_line = self.slope * x_line + self.intercept
+        axes["regression"].plot(x_line, y_line, color='magenta', linestyle='-', linewidth=3, label='Regression Line')
+        
+        axes["regression"].set_title("Regression Accuracy: Darker = Farther from Line", fontweight='bold')
+        axes["regression"].set_xlabel(self.x_name)
+        axes["regression"].set_ylabel(self.y_name)
+        axes["regression"].legend()
 
-        # 1) Loss vs Iteration (Top Left)
-        axes["loss"].plot(losses_list)
-        axes["loss"].set_xlabel("Iteration")
-        axes["loss"].set_ylabel("MSE loss")
-        axes["loss"].set_title("Gradient descent: loss over iterations")
+        # 2) Loss Curve Plot
+        epochs = range(len(self.losses))
+        axes["loss"].plot(epochs, self.losses, color='#FF4500', linewidth=3)
+        
+        min_loss = min(self.losses)
+        axes["loss"].fill_between(epochs, self.losses, min_loss, color='#FF4500', alpha=0.3)
+        
+        axes["loss"].set_title("Model Optimization Convergence", fontweight='bold')
+        axes["loss"].set_xlabel("Epochs")
+        axes["loss"].set_ylabel("MSE (Normalized)")
+        
+        stats_text = (f'Final MSE (Raw): {self.mse:.4f}\n'
+                      f'Correlation (R): {self.correlation:.4f}\n'
+                      f'R² Score: {self.r_squared:.4f}')
+        
+        axes["loss"].text(0.95, 0.95, stats_text, transform=axes["loss"].transAxes,
+                       verticalalignment='top', horizontalalignment='right',
+                       fontsize=12, fontweight='bold',
+                       bbox=dict(facecolor='black', alpha=0.7, edgecolor='none', boxstyle='round,pad=1'), color='white')
 
-        # 2) Weights and Bias vs Iteration (Top Right)
-        axes["params"].plot(weights_list, label="w (slope)")
-        axes["params"].plot(biases_list, label="b (intercept)")
+        # 3) Parameters Evolution
+        axes["params"].plot(self.ws, color='#1f77b4', linewidth=2.5, label="Slope (w)")
+        axes["params"].plot(self.bs, color='#ff7f0e', linewidth=2.5, label="Intercept (b)")
+        
+        marker_interval = max(1, len(self.ws) // 10)
+        axes["params"].plot(range(0, len(self.ws), marker_interval), 
+                         [self.ws[i] for i in range(0, len(self.ws), marker_interval)], 
+                         'o', color='#1f77b4', markersize=6)
+        axes["params"].plot(range(0, len(self.bs), marker_interval), 
+                         [self.bs[i] for i in range(0, len(self.bs), marker_interval)], 
+                         's', color='#ff7f0e', markersize=6)
+
+        axes["params"].set_title("Parameters Evolution", fontweight='bold')
         axes["params"].set_xlabel("Iteration")
-        axes["params"].set_ylabel("Parameter value")
-        axes["params"].set_title("Parameters over iterations")
+        axes["params"].set_ylabel("Normalized Value")
         axes["params"].legend()
 
-        # 3) Scatter Plot (Bottom, Spanning Full Width)
-        sns.scatterplot(data=self.data, x=self.x_name, y=self.y_name, color="red", ax=axes["scatter"])
-        axes["scatter"].plot(x_line, y_line, color="blue", label='slope')
-        axes["scatter"].set_title("Linear Regression")
-        axes["scatter"].legend()
+        # 4) Residual Distribution
+        sns.histplot(residuals, kde=True, ax=axes["residuals"], color="purple", alpha=0.4)
+        axes["residuals"].set_title("Residual Distribution (Normality Check)", fontweight='bold')
+        axes["residuals"].set_xlabel("Residual Value")
+        axes["residuals"].set_ylabel("Frequency")
 
-        # Adjust spacing to prevent overlap
-        plt.tight_layout()
-        plt.savefig(os.path.join("images", f"Output_{safe_timestamp}.png"), dpi=300, bbox_inches='tight')
+        plt.suptitle(f"Comprehensive Analysis Dashboard: {self.y_name} vs {self.x_name}", fontsize=22, fontweight='bold', y=0.98)
+        
+        save_path = os.path.join("images", f"Dashboard_{safe_timestamp}.png")
+        plt.savefig(save_path, dpi=300, bbox_inches='tight')
+        print(f"Polished dashboard saved to {save_path}")
         plt.show()
 
 if __name__ == "__main__":

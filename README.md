@@ -37,7 +37,7 @@ p-value= 0.0
 
 ```
 
-![Figure 1 — Synthetic data example (output 1)](images/Output_2026-01-15_10-09-16.png)
+![Figure 1 — Synthetic data example (output 1)](images/Dashboard_2026-01-15_17-43-46.png)
 
 Dataset used for OUTPUT 1 (synthetic example):
 - https://www.kaggle.com/datasets/andreylss/study-hours-vs-grades-dataset?resource=download
@@ -67,7 +67,7 @@ No statistically significant linear relationship
 p-value= 0.7426360841829016
 ```
 
-![Figure 2 — Real case study (output 2)](images/Output_2026-01-15_10-09-17.png)
+![Figure 2 — Real case study (output 2)](images/Dashboard_2026-01-15_17-43-52.png)
 
 Dataset used for OUTPUT 2 (real case study):
 - https://www.kaggle.com/datasets/mahmoudelhemaly/students-grading-dataset
