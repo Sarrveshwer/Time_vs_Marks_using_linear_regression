@@ -1,0 +1,33 @@
+05:45:54 - INFO - STARTED: result | Args: [] | Kwargs: []
+05:45:54 - INFO - STARTED: choose_dataset | Args: [] | Kwargs: []
+05:45:54 - INFO - Score  Hours
+05:45:54 - INFO - 0     59.61   10.3
+05:45:54 - INFO - 1     74.00   27.1
+05:45:54 - INFO - 2     63.85   12.4
+05:45:54 - INFO - 3     44.44   25.5
+05:45:54 - INFO - 4     61.77   13.3
+05:45:54 - INFO - ...     ...    ...
+05:45:54 - INFO - 4995  45.63    7.8
+05:45:54 - INFO - 4996  47.42   24.2
+05:45:54 - INFO - 4997  65.83    7.6
+05:45:54 - INFO - 4998  57.45   14.5
+05:45:54 - INFO - 4999  88.42   29.9
+05:45:54 - INFO - [5000 rows x 2 columns]
+05:45:54 - INFO - FINISHED: choose_dataset | Duration: 0.0143s | Output: tuple(<Series shape=(5000,)>, <Series shape=(5000,)>, 'Hours', 'Score', <DataFrame shape=(5000, 2)>)
+05:45:54 - INFO - STARTED: train_regression | Args: ['<Series shape=(5000,)>', '<Series shape=(5000,)>'] | Kwargs: ['lr=0.1']
+05:45:55 - INFO - FINISHED: train_regression | Duration: 0.0756s | Output: tuple(np.float64(0.004644911549128608), np.float64(-3.2159164220502155e-16), np.float64(0.004644911549128606), np.float64(0.7426360841829016), np.float64(0.014144812308597042), <list len=156>, <list len=156>, <list len=156>)
+05:45:55 - INFO - STARTED: train_regression | Args: ['<Series shape=(5000,)>', '<Series shape=(5000,)>'] | Kwargs: ['lr=0.01']
+05:45:55 - INFO - FINISHED: train_regression | Duration: 0.0783s | Output: tuple(np.float64(0.0044460632932132125), np.float64(-3.0705393783136986e-16), np.float64(0.004644911549128606), np.float64(0.7532875964519588), np.float64(0.014144812599778983), <list len=156>, <list len=156>, <list len=156>)
+05:45:55 - INFO - STARTED: train_regression | Args: ['<Series shape=(5000,)>', '<Series shape=(5000,)>'] | Kwargs: ['lr=0.001']
+05:45:55 - INFO - FINISHED: train_regression | Duration: 0.0866s | Output: tuple(np.float64(0.0012457716175253723), np.float64(-8.575113952247194e-17), np.float64(0.004644911549128606), np.float64(0.9298228396222088), np.float64(0.014144894353566969), <list len=156>, <list len=156>, <list len=156>)
+05:45:55 - INFO - STARTED: train_regression | Args: ['<Series shape=(5000,)>', '<Series shape=(5000,)>'] | Kwargs: ['lr=0.0001']
+05:45:55 - INFO - FINISHED: train_regression | Duration: 0.0766s | Output: tuple(np.float64(0.00014266974803169274), np.float64(-9.818990065468822e-18), np.float64(0.004644911549128606), np.float64(0.991952865230445), np.float64(0.014144955727268095), <list len=156>, <list len=156>, <list len=156>)
+05:45:55 - INFO - Best lr= 0.1
+05:45:55 - INFO - STARTED: train_regression | Args: ['<Series shape=(5000,)>', '<Series shape=(5000,)>', '0.1'] | Kwargs: []
+05:45:55 - INFO - FINISHED: train_regression | Duration: 0.0752s | Output: tuple(np.float64(0.004644911549128608), np.float64(-3.2159164220502155e-16), np.float64(0.004644911549128606), np.float64(0.7426360841829016), np.float64(0.014144812308597042), <list len=156>, <list len=156>, <list len=156>)
+05:45:55 - INFO - MSE= 292.65287328982896
+05:45:55 - INFO - RMSE= 17.107100084170575
+05:45:55 - INFO - Correlation= 0.004644911549128606
+05:45:55 - INFO - No statistically significant linear relationship
+05:45:55 - INFO - p-value= 0.7426360841829016
+05:45:55 - INFO - FINISHED: result | Duration: 0.5673s | Output: None

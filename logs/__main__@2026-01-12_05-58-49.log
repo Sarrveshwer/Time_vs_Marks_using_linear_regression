@@ -1,0 +1,21 @@
+1
+[05:58:50]       Avg. Area Income  Avg. Area House Age  ...         Price                                            Address
+[05:58:50] 0         79545.458574             5.682861  ...  1.059034e+06  208 Michael Ferry Apt. 674\nLaurabury, NE 3701...
+[05:58:50] 1         79248.642455             6.002900  ...  1.505891e+06  188 Johnson Views Suite 079\nLake Kathleen, CA...
+[05:58:50] 2         61287.067179             5.865890  ...  1.058988e+06  9127 Elizabeth Stravenue\nDanieltown, WI 06482...
+[05:58:50] 3         63345.240046             7.188236  ...  1.260617e+06                          USS Barnett\nFPO AP 44820
+[05:58:50] 4         59982.197226             5.040555  ...  6.309435e+05                         USNS Raymond\nFPO AE 09386
+[05:58:50] ...                ...                  ...  ...           ...                                                ...
+[05:58:50] 4995      60567.944140             7.830362  ...  1.060194e+06                   USNS Williams\nFPO AP 30153-7653
+[05:58:50] 4996      78491.275435             6.999135  ...  1.482618e+06              PSC 9258, Box 8489\nAPO AA 42991-3352
+[05:58:50] 4997      63390.686886             7.250591  ...  1.030730e+06  4215 Tracy Garden Suite 076\nJoshualand, VA 01...
+[05:58:50] 4998      68001.331235             5.534388  ...  1.198657e+06                          USS Wallace\nFPO AE 73316
+[05:58:50] 4999      65510.581804             5.992305  ...  1.298950e+06  37778 George Ridges Apt. 509\nEast Holly, NV 2...
+
+[05:58:50] [5000 rows x 7 columns]
+[05:58:50] Best lr= 0
+[05:59:51] MSE= 124667119790.60112
+[05:59:51] RMSE= 353082.3130526381
+[05:59:51] Correlation= 0.6397337782498939
+[05:59:51] No statistically significant linear relationship
+[05:59:51] p-value= 1.0

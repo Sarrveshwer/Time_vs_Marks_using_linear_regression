@@ -1,0 +1,20 @@
+05:26:17 - INFO - STARTED: result | Args: [] | Kwargs: []
+05:26:17 - INFO - STARTED: choose_dataset | Args: [] | Kwargs: []
+05:26:18 - INFO - FINISHED: choose_dataset | Duration: 1.1055s | Output: tuple(<ndarray shape=(5000,) dtype=float64>, <ndarray shape=(5000,) dtype=float64>, 'study_hours', 'grade', <DataFrame shape=(5000, 2)>)
+05:26:18 - INFO - STARTED: train_regression | Args: ['<ndarray shape=(5000,) dtype=float64>', '<ndarray shape=(5000,) dtype=float64>'] | Kwargs: ['lr=0.1', 'epochs=1000']
+05:26:18 - INFO - FINISHED: train_regression | Duration: 0.0213s | Output: tuple(np.float64(0.8262974416640292), np.float64(1.0231815394945255e-16), np.float64(0.8262974416640294), np.float64(0.0), np.float64(0.007966925149543662), <list len=1000>, <list len=1000>, <list len=1000>)
+05:26:18 - INFO - STARTED: train_regression | Args: ['<ndarray shape=(5000,) dtype=float64>', '<ndarray shape=(5000,) dtype=float64>'] | Kwargs: ['lr=0.01', 'epochs=1000']
+05:26:18 - INFO - FINISHED: train_regression | Duration: 0.0200s | Output: tuple(np.float64(0.8262974402733976), np.float64(1.1048228998333818e-16), np.float64(0.8262974416640294), np.float64(0.0), np.float64(0.007966925149543662), <list len=1000>, <list len=1000>, <list len=1000>)
+05:26:18 - INFO - STARTED: train_regression | Args: ['<ndarray shape=(5000,) dtype=float64>', '<ndarray shape=(5000,) dtype=float64>'] | Kwargs: ['lr=0.001', 'epochs=1000']
+05:26:18 - INFO - FINISHED: train_regression | Duration: 0.0195s | Output: tuple(np.float64(0.7146939723067619), np.float64(3.3757885375962366e-17), np.float64(0.8262974416640294), np.float64(0.0), np.float64(0.008121819995446034), <list len=1000>, <list len=1000>, <list len=1000>)
+05:26:18 - INFO - STARTED: train_regression | Args: ['<ndarray shape=(5000,) dtype=float64>', '<ndarray shape=(5000,) dtype=float64>'] | Kwargs: ['lr=0.0001', 'epochs=1000']
+05:26:18 - INFO - FINISHED: train_regression | Duration: 0.0199s | Output: tuple(np.float64(0.1497958469555352), np.float64(-9.95072468867875e-18), np.float64(0.8262974416640294), np.float64(0.0), np.float64(0.012451482035102138), <list len=1000>, <list len=1000>, <list len=1000>)
+05:26:18 - INFO - Best lr=0.1
+05:26:18 - INFO - STARTED: train_regression | Args: ['<ndarray shape=(5000,) dtype=float64>', '<ndarray shape=(5000,) dtype=float64>', '0.1'] | Kwargs: ['epochs=2000']
+05:26:18 - INFO - FINISHED: train_regression | Duration: 0.0395s | Output: tuple(np.float64(0.8262974416640292), np.float64(1.0786038728837918e-16), np.float64(0.8262974416640294), np.float64(0.0), np.float64(0.007966925149543662), <list len=2000>, <list len=2000>, <list len=2000>)
+05:26:32 - INFO - MSE (raw)=98.8873836451361
+05:26:32 - INFO - RMSE (raw)=9.94421357600168
+05:26:32 - INFO - Correlation=0.8262974416640294
+05:26:32 - INFO - Slope is statistically significant
+05:26:32 - INFO - p-value=0.0
+05:26:32 - INFO - FINISHED: result | Duration: 14.9863s | Output: None
