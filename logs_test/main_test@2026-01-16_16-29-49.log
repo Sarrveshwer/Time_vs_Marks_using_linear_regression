@@ -1,0 +1,40 @@
+
+[16:29:49] --- Running Dataset 1 (Synthetic) ---
+[16:29:49]       study_hours  grade
+[16:29:49] 0            9.15  91.91
+[16:29:49] 1            9.37  86.81
+[16:29:49] 2            2.86  53.39
+[16:29:49] 3            8.30  85.52
+[16:29:49] 4            6.42  77.98
+[16:29:49] ...           ...    ...
+[16:29:49] 4995         4.89  58.91
+[16:29:49] 4996         4.43  65.22
+[16:29:49] 4997         9.91  81.11
+[16:29:49] 4998         6.91  73.79
+[16:29:49] 4999         0.54  55.08
+
+[16:29:49] [5000 rows x 2 columns]
+[16:29:49] Best lr= 0.1
+[16:29:49] MSE= 98.8873836451361
+[16:29:49] RMSE= 9.94421357600168
+[16:29:49] Correlation (R)= 0.8262974416640296
+[16:29:49] R-squared= 0.6827674621005203
+[16:29:49] Slope is statistically significant
+[16:29:49] p-value= 0.0
+
+[16:29:50] ============================== CRASH DETECTED ==============================
+[16:29:50] Timestamp: 2026-01-16 16:29:50.046256
+[16:29:50] Traceback (most recent call last):
+[16:29:50]   File "/home/sarrveshwer/Documents/GitHub/Time_vs_Marks_using_linear_regression/main.py", line 333, in <module>
+[16:29:50]     model1.run("1")
+[16:29:50]     ~~~~~~~~~~^^^^^
+[16:29:50]   File "/home/sarrveshwer/Documents/GitHub/Time_vs_Marks_using_linear_regression/main.py", line 248, in run
+[16:29:50]     self.plot()
+[16:29:50]     ~~~~~~~~~^^
+[16:29:50]   File "/home/sarrveshwer/Documents/GitHub/Time_vs_Marks_using_linear_regression/main.py", line 276, in plot
+[16:29:50]     axes["Residual"].title("Residual Plot")
+[16:29:50]     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+[16:29:50] TypeError: 'Text' object is not callable
+
+[16:29:50] ============================================================================
+

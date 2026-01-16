@@ -1,0 +1,47 @@
+
+[15:57:29] --- Running Dataset 1 (Synthetic) ---
+[15:57:29]       study_hours  grade
+[15:57:29] 0            9.15  91.91
+[15:57:29] 1            9.37  86.81
+[15:57:29] 2            2.86  53.39
+[15:57:29] 3            8.30  85.52
+[15:57:29] 4            6.42  77.98
+[15:57:29] ...           ...    ...
+[15:57:29] 4995         4.89  58.91
+[15:57:29] 4996         4.43  65.22
+[15:57:29] 4997         9.91  81.11
+[15:57:29] 4998         6.91  73.79
+[15:57:29] 4999         0.54  55.08
+
+[15:57:29] [5000 rows x 2 columns]
+[15:57:29] Best lr= 0.1
+[15:57:29] MSE= 98.8873836451361
+[15:57:29] RMSE= 9.94421357600168
+[15:57:29] Correlation (R)= 0.8262974416640296
+[15:57:29] R-squared= 0.6827674621005203
+[15:57:29] Slope is statistically significant
+[15:57:29] p-value= 0.0
+
+[15:57:29] ============================== CRASH DETECTED ==============================
+[15:57:29] Timestamp: 2026-01-16 15:57:29.855496
+[15:57:29] Traceback (most recent call last):
+[15:57:29]   File "/home/sarrveshwer/Documents/GitHub/Time_vs_Marks_using_linear_regression/main.py", line 335, in <module>
+[15:57:29]     model1.run("1")
+[15:57:29]     ~~~~~~~~~~^^^^^
+[15:57:29]   File "/home/sarrveshwer/Documents/GitHub/Time_vs_Marks_using_linear_regression/main.py", line 248, in run
+[15:57:29]     self.plot()
+[15:57:29]     ~~~~~~~~~^^
+[15:57:29]   File "/home/sarrveshwer/Documents/GitHub/Time_vs_Marks_using_linear_regression/main.py", line 252, in plot
+[15:57:29]     sns.set_theme(style="mako")
+[15:57:29]     ~~~~~~~~~~~~~^^^^^^^^^^^^^^
+[15:57:29]   File "/home/sarrveshwer/Documents/GitHub/Time_vs_Marks_using_linear_regression/.venv/lib/python3.14/site-packages/seaborn/rcmod.py", line 120, in set_theme
+[15:57:29]     set_style(style, rc={"font.family": font})
+[15:57:29]     ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+[15:57:29]   File "/home/sarrveshwer/Documents/GitHub/Time_vs_Marks_using_linear_regression/.venv/lib/python3.14/site-packages/seaborn/rcmod.py", line 331, in set_style
+[15:57:29]     style_object = axes_style(style, rc)
+[15:57:29]   File "/home/sarrveshwer/Documents/GitHub/Time_vs_Marks_using_linear_regression/.venv/lib/python3.14/site-packages/seaborn/rcmod.py", line 185, in axes_style
+[15:57:29]     raise ValueError(f"style must be one of {', '.join(styles)}")
+[15:57:29] ValueError: style must be one of white, dark, whitegrid, darkgrid, ticks
+
+[15:57:29] ============================================================================
+

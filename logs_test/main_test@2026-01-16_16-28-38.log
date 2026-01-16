@@ -1,0 +1,40 @@
+
+[16:28:38] --- Running Dataset 1 (Synthetic) ---
+[16:28:38]       study_hours  grade
+[16:28:38] 0            9.15  91.91
+[16:28:38] 1            9.37  86.81
+[16:28:38] 2            2.86  53.39
+[16:28:38] 3            8.30  85.52
+[16:28:38] 4            6.42  77.98
+[16:28:38] ...           ...    ...
+[16:28:38] 4995         4.89  58.91
+[16:28:38] 4996         4.43  65.22
+[16:28:38] 4997         9.91  81.11
+[16:28:38] 4998         6.91  73.79
+[16:28:38] 4999         0.54  55.08
+
+[16:28:38] [5000 rows x 2 columns]
+[16:28:38] Best lr= 0.1
+[16:28:38] MSE= 98.8873836451361
+[16:28:38] RMSE= 9.94421357600168
+[16:28:38] Correlation (R)= 0.8262974416640296
+[16:28:38] R-squared= 0.6827674621005203
+[16:28:38] Slope is statistically significant
+[16:28:38] p-value= 0.0
+
+[16:28:38] ============================== CRASH DETECTED ==============================
+[16:28:38] Timestamp: 2026-01-16 16:28:38.501505
+[16:28:38] Traceback (most recent call last):
+[16:28:38]   File "/home/sarrveshwer/Documents/GitHub/Time_vs_Marks_using_linear_regression/main.py", line 332, in <module>
+[16:28:38]     model1.run("1")
+[16:28:38]     ~~~~~~~~~~^^^^^
+[16:28:38]   File "/home/sarrveshwer/Documents/GitHub/Time_vs_Marks_using_linear_regression/main.py", line 248, in run
+[16:28:38]     self.plot()
+[16:28:38]     ~~~~~~~~~^^
+[16:28:38]   File "/home/sarrveshwer/Documents/GitHub/Time_vs_Marks_using_linear_regression/main.py", line 269, in plot
+[16:28:38]     y=self.residuals,
+[16:28:38]       ^^^^^^^^^^^^^^
+[16:28:38] AttributeError: 'LinearRegressionModel' object has no attribute 'residuals'
+
+[16:28:38] ============================================================================
+

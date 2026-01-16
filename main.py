@@ -248,40 +248,36 @@ class LinearRegressionModel:
         self.plot()
 
     def plot(self):
-        # Update global font sizes for better scaling
         plt.rcParams.update({'font.size': 12, 'axes.titlesize': 16, 'axes.labelsize': 14})
         sns.set_theme(style="darkgrid")
         safe_timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         
         layout = [
-            ["regression", "loss"],
+            ["Residual", "loss"],
             ["params", "residuals"]
         ]
         
         fig, axes = plt.subplot_mosaic(layout, figsize=(16, 14), constrained_layout=True)
 
-        # 1) Regression Plot with Distance-Based Coloring (Closer = Darker)
+        # 1) Residual Plot with Distance-Based Coloring (Closer = Darker)
         x_plot = self.x
         y_plot = self.y
         residuals = self.y - self.y_pred
-        abs_residuals = np.abs(residuals)
+        r = np.abs(residuals)
         
-        # Sort values so darker (closer) points are plotted on top
-        # Smallest abs_residuals should be last in the sorted list
-        idx = abs_residuals.argsort()[::-1] 
-        x_sorted, y_sorted, res_sorted = x_plot.iloc[idx], y_plot.iloc[idx], abs_residuals.iloc[idx]
+        sns.scatterplot(x=self.y_pred,
+                y=residuals, 
+                hue=r,
+                palette="mako",
+                alpha=0.7,
+                edgecolor="none",   
+                linewidth=0,
+                ax=axes["Residual"])
+        axes["Residual"].set_title("Residual Plot")
+        axes["Residual"].set_xlabel("Residuals")
+        axes["Residual"].set_ylabel("Predicted Values")
+        axes["Residual"].axhline(y=0, color='#41b5ac', linewidth=3,alpha=0.9)
         
-        # Using "Greens_r" map: low residual (near line) = dark, high residual (far) = light
-        scatter = axes["regression"].scatter(x_sorted, y_sorted, c=res_sorted, cmap="Greens_r", s=40, alpha=0.9, edgecolor='none')
-        
-        x_line = np.linspace(min(self.x), max(self.x), 100)
-        y_line = self.slope * x_line + self.intercept
-        axes["regression"].plot(x_line, y_line, color='magenta', linestyle='-', linewidth=3, label='Regression Line')
-        
-        axes["regression"].set_title("Regression Accuracy: Darker = Farther from Line", fontweight='bold')
-        axes["regression"].set_xlabel(self.x_name)
-        axes["regression"].set_ylabel(self.y_name)
-        axes["regression"].legend()
 
         # 2) Loss Curve Plot
         epochs = range(len(self.losses))
